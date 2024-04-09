@@ -11,7 +11,8 @@
 
   <div class="container text-center">
     <form action="/search" class="search" method="get">
-      <input type="text" placeholder="enter a city" class="my-2">
+      <input type="text" placeholder="enter a city" class="my-2 city" name="city">
+      <input type="text" placeholder="enter your statecode" class="my-2 statecode" name="statecode">
       <button>
         <img src="/images/search.png" alt="">
       </button>
@@ -19,6 +20,11 @@
 
     <div>
       <img src="/images/clouds.png" alt="">
+      <% if (locals.temp) { %>
+          <h2><%= temp %>°F</h2>
+      <% } else {%>
+        <h2>No city currently inputed</h2>
+        <%  } %>
     </div>
   </div>
   
