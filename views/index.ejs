@@ -10,10 +10,16 @@
 <body>
 
   <div class="container text-center">
-    <h1>Welcome to my Weather App</h1>
-    <form action="">
-      <input type="text" placeholder="enter a city">
+    <form action="/search" class="search" method="get">
+      <input type="text" placeholder="enter a city" class="my-2">
+      <button>
+        <img src="/images/search.png" alt="">
+      </button>
     </form>
+
+    <div>
+      <img src="/images/clouds.png" alt="">
+    </div>
   </div>
   
   <%- include("partials/footer.ejs") %>
