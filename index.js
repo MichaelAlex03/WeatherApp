@@ -26,7 +26,9 @@ function convertToNonMilitaryTime(req, res, next) {
   next(); 
 }
 
+
 app.use(convertToNonMilitaryTime);
+
 
 app.get('/', (req, res) => {
     res.render("index.ejs");
@@ -39,10 +41,16 @@ app.get("/search", async(req, res) => {
   stateCode = stateCode.toUpperCase();
   try {
       const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${stateCode},&appid=${apiKey}`);
-      console.log(result.data.weather[0]);
+      console.log(result.data);
       temperature = (result.data.main.temp * (9/5)) - 459.67;
       temperature = temperature.toFixed(0);
-      res.render("index.ejs", { temp: temperature, weatherId: result.data.weather[0].id, time: time, city: city, state: stateCode});
+      res.render("index.ejs", { temp: temperature, 
+        weatherId: result.data.weather[0].id, 
+        time: time, 
+        city: city, 
+        state: stateCode,
+        humidity: result.data.main.humidity
+      });
     } catch (error) {
       res.render("index.ejs", { secret: JSON.stringify(error.response.data)});
     }
