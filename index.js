@@ -10,24 +10,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const apiKey = "a2f791935cc39ad4fcc5ab8eb4a53378";
 var temperature;
-var currentTime = new Date();
-var time = currentTime.getHours() + ":" + currentTime.getMinutes();
-
-function convertToNonMilitaryTime(req, res, next) {
-  var hours = currentTime.getHours();
-  var minutes = currentTime.getMinutes();
-  var period = (hours >= 12) ? 'PM' : 'AM';
-  if (hours === 0) {
-    hours = 12;
-  } else if (hours > 12) {
-    hours -= 12;
-  }
-  time = hours + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + period;
-  next(); 
-}
-
-
-app.use(convertToNonMilitaryTime);
 
 
 app.get('/', (req, res) => {
@@ -46,10 +28,8 @@ app.get("/search", async(req, res) => {
       temperature = temperature.toFixed(0);
       res.render("index.ejs", { temp: temperature, 
         weatherId: result.data.weather[0].id, 
-        time: time, 
         city: city, 
         state: stateCode,
-        humidity: result.data.main.humidity
       });
     } catch (error) {
       res.render("index.ejs", { secret: JSON.stringify(error.response.data)});
